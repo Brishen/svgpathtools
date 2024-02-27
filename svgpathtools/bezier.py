@@ -165,13 +165,13 @@ def halve_bezier(p):
 
 # Bounding Boxes ##############################################################
 
-def bezier_real_minmax(p, tol=1E-6):
+def bezier_real_minmax(p):
     """returns the minimum and maximum for any real cubic bezier"""
     local_extremizers = [0, 1]
     if len(p) == 4:  # cubic case
         a = [p.real for p in p]
         denom = a[0] - 3*a[1] + 3*a[2] - a[3]
-        if abs(denom) > tol:
+        if abs(denom) >= 3*ulp(max(a)):
             delta = a[1]**2 - (a[0] + a[1])*a[2] + a[2]**2 + (a[0] - a[1])*a[3]
             if delta >= 0:  # otherwise no local extrema
                 sqdelta = sqrt(delta)
